@@ -17,12 +17,8 @@ public:
 	std::string	label() const;
 	int 		sum();
 private:
-	std::string lab;
 	int			num;
-	PairArrayT	pair;
 
-
-	
 };
 
 #endif

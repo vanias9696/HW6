@@ -1,48 +1,36 @@
 #include "wineP.h"
 
-Wine::Wine(const char* l, int y, const int yr[], const int bot[])
-{
-	lab = l;
-	num = y;
-	pair.first.resize(y);
-	pair.second.resize(y);
-	for (int i = 0; i < y; ++i)
-	{
-		pair.first[i] = yr[i];
-		pair.second[i] = bot[i];
-	}
-}
+Wine::Wine(const char* l, int y, const int yr[], const int bot[]) :
+	PairArrayT(ArrayIntT(yr, y), ArrayIntT(bot, y)), std::string(l), num(y){}
 
-Wine::Wine(const char* l, int y)
-{
-	num = 0;
-	lab = l;
-	pair.first.resize(y);
-	pair.second.resize(y);
-}
+Wine::Wine(const char* l, int y) : PairArrayT(ArrayIntT(y), ArrayIntT(y)), std::string(l), num(0) {}
 
-int			Wine::sum() {return(pair.second.sum());}
+int			Wine::sum() {return(PairArrayT::second.sum());}
 
-std::string	Wine::label() const {return (lab);}
+std::string	Wine::label() const {return *this;}
 
 void		Wine::getBottles()
 {
-	for (int i = num; i < static_cast<int>(pair.first.size()); ++i)
+	int t = static_cast<int> (PairArrayT::first.size());
+
+	for (int i = num; i < t; ++i)
 	{
 		std::cout << "Year : ";
-		std::cin >> pair.first[i];
+		std::cin >> PairArrayT::first[i];
 		std::cout << "Number of buttles: ";
-		std::cin >> pair.second[i];
+		std::cin >> PairArrayT::second[i];
 		++num;
 	}
 }
 
 void		Wine::show()
 {
-	std::cout << "Wine label: " << lab << std::endl;
-	for (int i = 0; i < static_cast<int>(pair.first.size()); ++i)
+	int t = static_cast<int> (PairArrayT::first.size());
+
+	std::cout << "Wine label: " << static_cast<std::string>(*this) << std::endl;
+	for (int i = 0; i < t; ++i)
 	{
-		std::cout << "Year: "<< pair.first[i] << ". Number of bottles: " <<
-			pair.second[i] << "." << std::endl;
+		std::cout << "Year: "<< PairArrayT::first[i] << ". Number of bottles: " <<
+			PairArrayT::second[i] << "." << std::endl;
 	}
 }
